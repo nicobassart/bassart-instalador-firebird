@@ -17,6 +17,7 @@ namespace Instalador
             Padre.PATH_LOCAL_INSTALADOR = carpeta.Text;
             Padre.PATH_LOCAL_TEMP_INSTALADOR = Padre.PATH_LOCAL_INSTALADOR + "\\temp";
             Padre.PATH_LOCAL_PROG_INSTALADOR = Padre.PATH_LOCAL_INSTALADOR + "\\prog";
+            Padre.seleccion = this.seleccion();
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -29,8 +30,10 @@ namespace Instalador
                 Padre.PATH_LOCAL_PROG_INSTALADOR = Padre.PATH_LOCAL_INSTALADOR + "\\prog";
                 Padre.PATH_LOCAL_BBDD_INSTALADOR = Padre.PATH_LOCAL_PROG_INSTALADOR + "\\database";
                 Padre.PATH_LOCAL_DLLS_INSTALADOR = Padre.PATH_LOCAL_PROG_INSTALADOR + "\\dlls";
+                Padre.seleccion = this.seleccion();
             }
         }
+
         private void Hijo1_Disposed(object sender, EventArgs e)
         {
             Padre.PATH_LOCAL_INSTALADOR = carpeta.Text;
@@ -38,9 +41,8 @@ namespace Instalador
             Padre.PATH_LOCAL_PROG_INSTALADOR = Padre.PATH_LOCAL_INSTALADOR + "\\prog";
             Padre.PATH_LOCAL_BBDD_INSTALADOR = Padre.PATH_LOCAL_PROG_INSTALADOR + "\\database";
             Padre.PATH_LOCAL_DLLS_INSTALADOR = Padre.PATH_LOCAL_PROG_INSTALADOR + "\\dlls";
-
+            Padre.seleccion = this.seleccion();
         }
-
 
         static string ProgramFilesx86()
         {
@@ -60,6 +62,27 @@ namespace Instalador
                 return Environment.GetEnvironmentVariable("USERPROFILE");
             }
             return Environment.GetEnvironmentVariable("USERPROFILE");
-        }    
+        }
+
+        public int seleccion() {
+            if (radio64.Checked)
+                return 64;
+                    
+
+            if(radio32.Checked)
+                return 32;
+
+            return 64;
+        }
+
+        private void modificar64(object sender, EventArgs e)
+        {
+            Padre.seleccion = 64;
+        }
+
+        private void modificar32(object sender, EventArgs e)
+        {
+            Padre.seleccion = 32;
+        } 
     }
 }

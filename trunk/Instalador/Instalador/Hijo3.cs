@@ -6,6 +6,11 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
+using System.Text;
 
 namespace Instalador
 {
@@ -18,82 +23,25 @@ namespace Instalador
 
         private void Hijo3_Load(object sender, EventArgs e)
         {
+            configuraciones.Visible = false;
             try
             {
-                String param1;
-                String param2;
-                String param3;
-                String param4;
-                String param5;
-                String param6;
-                String param7;
-                String commando;
-
-                param1 = " /i \"" + Padre.PATH_LOCAL_TEMP_INSTALADOR + "\\mysql-5.5.24-win32.msi\"";
-                param2 = "/qn INSTALLDIR=\"" + Padre.PATH_LOCAL_INSTALADOR + "\\MySQL\" DATADIR=\"" + Padre.PATH_LOCAL_INSTALADOR + "\\MySQL\"";
-                param3 = "/L* \"" + Padre.PATH_LOCAL_INSTALADOR + "\\mysql-log.txt\"";
-                commando = param1 + " " + param2 + " " + param3;
-
-                textoInstalando.Text = "Instalando Mysql";
-                progressBar.Value = 33;
-
-                this.ejecutarPrograma("msiexec", commando);
-
-                param1 = "\"-l" + Padre.PATH_LOCAL_INSTALADOR + "\\mysql_install_log.txt\"";
-                param2 = "\"-nMySQL Server\"";
-                param3 = "\"-p" + Padre.PATH_LOCAL_INSTALADOR + "\\MySQL\"";
-                param4 = "-v5.1.68";
-                param5 = "\"-t" + Padre.PATH_LOCAL_INSTALADOR + "\\MySQL\\my-template.ini\"";
-                param6 = "\"-c" + Padre.PATH_LOCAL_INSTALADOR + "\\MySQL\\mytest.ini\"";
-                param7 = "ServerType=DEVELOPMENT DatabaseType=MIXED ConnectionUsage=DSS Port=3306 ServiceName=MySQL51 RootPassword=root";
-
-                commando = " -i -q " + param1 + " " + param2 + " " + param3 + " " + param4 + " " + param5 + " " + param6 + " " + param7;
-
-                textoInstalando.Text = "Configurando Mysql";
-                progressBar.Value = 66;
-
-                this.ejecutarPrograma(Padre.PATH_LOCAL_INSTALADOR + "\\MySQL\\bin\\mysqlinstanceconfig", commando);
-
-                param1 = "-h localhost";
-                param2 = "-u root";
-                param3 = "-proot";
-                param4 = "-e \"create database inmobiliaria\"";
-
-                commando = param1 + " " + param2 + " " + param3 + " " + param4;
-                textoInstalando.Text = "Creando la base de batos";
-
-                progressBar.Value = 88;
-
-                this.ejecutarPrograma(Padre.PATH_LOCAL_INSTALADOR + "\\MySQL\\bin\\mysql", commando);
-
-                param1 = "-h localhost";
-                param2 = "-u root";
-                param3 = "-proot";
-                param4 = "--port=3306";
-                param5 = @"-D inmobiliaria < "+Padre.PATH_LOCAL_TEMP_INSTALADOR + @"\CreateAll.sql";
-
-                commando = param1 + " " + param2 + " " + param3 + " " + param4 + " " + param5;
-                textoInstalando.Text = "Ejecutando Script sql";
-
-                progressBar.Value = 100;
-
-                this.ejecutarProgramaCMD("\"" + Padre.PATH_LOCAL_INSTALADOR + @"\MySQL\bin\mysql"+ "\"", commando);
-
+                progressBar.Value = 50;
                 // Acá vamos a generar el icono de acceso directo al ejecutable de la aplicacion
 
                 this.generarIcono(Padre.PATH_LOCAL_PROG_INSTALADOR, Padre.EJECUTABLE, Padre.FILE_ICON);
-
+                progressBar.Value = 100;
 
             }
             catch (Exception ex) {
                 // Deberia generar un log y emitir una alerta
                 MessageBox.Show(ex.Message + " FUENTE:" + ex.Source +"" +ex.Data);
             }
-
+            configuraciones.Visible = true;
         }
         public void ejecutarPrograma(String prog, String commando)
         {
-
+            /*
             int timeOut = 10000;
             System.Diagnostics.ProcessStartInfo psi = new System.Diagnostics.ProcessStartInfo(@prog);
             psi.RedirectStandardOutput = true;
@@ -117,7 +65,7 @@ namespace Instalador
                     //El proceso no estaba respondiendo; forzar el cierre del proceso.
                     proc.Kill();
 
-            System.Threading.Thread.Sleep(120);
+            System.Threading.Thread.Sleep(120);*/
         }
 
         public void ejecutarProgramaCMD(String prog, String commando)
@@ -155,6 +103,30 @@ namespace Instalador
 
         public void generarIcono(String path,String ejecutable, String icono) {
             string escritorio = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+            string app = path + @"\" + ejecutable;
+
+            IShellLink link = (IShellLink)new ShellLink();
+
+            // setup shortcut information
+            link.SetDescription("Gestion Inmobiliaria");
+            link.SetPath(app);
+            link.SetWorkingDirectory(path);
+            string icon = path + @"\" + icono;
+            link.SetIconLocation(icon, 0);
+
+            // save it
+            IPersistFile file = (IPersistFile)link;
+            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+            file.Save(Path.Combine(desktopPath, "Gestion Inmobiliaria.lnk"), false);
+
+
+
+
+        }
+
+        public void generarIconoXP(String path, String ejecutable, String icono)
+        {
+            string escritorio = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
 
             using (System.IO.StreamWriter writer = new System.IO.StreamWriter(escritorio + "\\" + "Gestion Inmobiliaria" + ".url"))
             {
@@ -162,11 +134,44 @@ namespace Instalador
                 string app = path + @"\" + ejecutable;
                 writer.WriteLine("[InternetShortcut]");
                 writer.WriteLine("URL=file:///" + app);
+                writer.WriteLine("URL=" + app);
                 writer.WriteLine("IconIndex=0");
-                string icon = path + @"\" +icono;
+                writer.WriteLine("WORKINGDIR=" + app);
+
+                string icon = path + @"\" + icono;
                 writer.WriteLine("IconFile=" + icon);
                 writer.Flush();
             }
         }
+    }
+    [ComImport]
+    [Guid("00021401-0000-0000-C000-000000000046")]
+    internal class ShellLink
+    {
+    }
+
+    [ComImport]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    [Guid("000214F9-0000-0000-C000-000000000046")]
+    internal interface IShellLink
+    {
+        void GetPath([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszFile, int cchMaxPath, out IntPtr pfd, int fFlags);
+        void GetIDList(out IntPtr ppidl);
+        void SetIDList(IntPtr pidl);
+        void GetDescription([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszName, int cchMaxName);
+        void SetDescription([MarshalAs(UnmanagedType.LPWStr)] string pszName);
+        void GetWorkingDirectory([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszDir, int cchMaxPath);
+        void SetWorkingDirectory([MarshalAs(UnmanagedType.LPWStr)] string pszDir);
+        void GetArguments([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszArgs, int cchMaxPath);
+        void SetArguments([MarshalAs(UnmanagedType.LPWStr)] string pszArgs);
+        void GetHotkey(out short pwHotkey);
+        void SetHotkey(short wHotkey);
+        void GetShowCmd(out int piShowCmd);
+        void SetShowCmd(int iShowCmd);
+        void GetIconLocation([Out, MarshalAs(UnmanagedType.LPWStr)] StringBuilder pszIconPath, int cchIconPath, out int piIcon);
+        void SetIconLocation([MarshalAs(UnmanagedType.LPWStr)] string pszIconPath, int iIcon);
+        void SetRelativePath([MarshalAs(UnmanagedType.LPWStr)] string pszPathRel, int dwReserved);
+        void Resolve(IntPtr hwnd, int fFlags);
+        void SetPath([MarshalAs(UnmanagedType.LPWStr)] string pszFile);
     }
 }

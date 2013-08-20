@@ -34,12 +34,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btn_selecciona = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.radio64 = new System.Windows.Forms.RadioButton();
+            this.radio32 = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // carpeta
             // 
-            this.carpeta.Location = new System.Drawing.Point(12, 124);
+            this.carpeta.Location = new System.Drawing.Point(12, 126);
             this.carpeta.Name = "carpeta";
             this.carpeta.Size = new System.Drawing.Size(388, 20);
             this.carpeta.TabIndex = 11;
@@ -76,12 +78,39 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Selección de ruta de instalación";
             // 
+            // radio64
+            // 
+            this.radio64.AutoSize = true;
+            this.radio64.Checked = true;
+            this.radio64.Location = new System.Drawing.Point(12, 167);
+            this.radio64.Name = "radio64";
+            this.radio64.Size = new System.Drawing.Size(84, 17);
+            this.radio64.TabIndex = 13;
+            this.radio64.TabStop = true;
+            this.radio64.Text = "Windows 64";
+            this.radio64.UseVisualStyleBackColor = true;
+            this.radio64.MouseCaptureChanged += new System.EventHandler(this.modificar64);
+            // 
+            // radio32
+            // 
+            this.radio32.AutoEllipsis = true;
+            this.radio32.AutoSize = true;
+            this.radio32.Location = new System.Drawing.Point(12, 191);
+            this.radio32.Name = "radio32";
+            this.radio32.Size = new System.Drawing.Size(84, 17);
+            this.radio32.TabIndex = 14;
+            this.radio32.Text = "Windows 32";
+            this.radio32.UseVisualStyleBackColor = true;
+            this.radio32.MouseCaptureChanged += new System.EventHandler(this.modificar32);
+            // 
             // Hijo1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonFace;
-            this.ClientSize = new System.Drawing.Size(505, 182);
+            this.ClientSize = new System.Drawing.Size(505, 231);
+            this.Controls.Add(this.radio32);
+            this.Controls.Add(this.radio64);
             this.Controls.Add(this.carpeta);
             this.Controls.Add(this.btn_selecciona);
             this.Controls.Add(this.groupBox1);
@@ -100,5 +129,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btn_selecciona;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.RadioButton radio64;
+        private System.Windows.Forms.RadioButton radio32;
     }
 }

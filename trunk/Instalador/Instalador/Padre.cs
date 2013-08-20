@@ -25,18 +25,33 @@ namespace Instalador
         //Ejecutable de la aplicacion
         public static String EJECUTABLE ="Inmobiliaria.jnlp";
 
+        //el punto ico debe estar dentro de la carpeta prog del site
         public static String FILE_ICON = "icono.ico";
 
+        //Usuario y clave de acceso al FTP
         public static String FTP_PASSWORD = "Pp123456B";
         public static String FTP_USUARIO = "bassart.com.ar";
+
         //Url desde donde descarga toda la carpeta temportal 
-        public static String PATH_WEB_INSTALADOR_TMP_32 = "ftp://ftp.bassart.com.ar/htdocs/Instalador_32/tmp";
+        public static String PATH_WEB_INSTALADOR_TMP_32 = "ftp://ftp.bassart.com.ar/htdocs/fire/Instalador_32/tmp";
         //URL de desde donde descarga todo el codigo fuente
-        public static String PATH_WEB_INSTALADOR_PROG_32 = "ftp://ftp.bassart.com.ar/htdocs/Instalador_32/prog";
+        public static String PATH_WEB_INSTALADOR_PROG_32 = "ftp://ftp.bassart.com.ar/htdocs/fire/Instalador_32/prog";
         //URL donde descarga la base de datos
-        public static String PATH_WEB_INSTALADOR_BBDD_32 = "ftp://ftp.bassart.com.ar/htdocs/Instalador_32/database";
+        public static String PATH_WEB_INSTALADOR_BBDD_32 = "ftp://ftp.bassart.com.ar/htdocs/fire/Instalador_32/database";
         //URL de descarga de Dlls
-        public static String PATH_WEB_INSTALADOR_DLLS_32 = "ftp://ftp.bassart.com.ar/htdocs/Instalador_32/dlls";
+        public static String PATH_WEB_INSTALADOR_DLLS_32 = "ftp://ftp.bassart.com.ar/htdocs/fire/Instalador_32/dlls";
+
+
+        //Url desde donde descarga toda la carpeta temportal 
+        public static String PATH_WEB_INSTALADOR_TMP_64 = "ftp://ftp.bassart.com.ar/htdocs/fire/Instalador_64/tmp";
+        //URL de desde donde descarga todo el codigo fuente
+        public static String PATH_WEB_INSTALADOR_PROG_64 = "ftp://ftp.bassart.com.ar/htdocs/fire/Instalador_64/prog";
+        //URL donde descarga la base de datos
+        public static String PATH_WEB_INSTALADOR_BBDD_64 = "ftp://ftp.bassart.com.ar/htdocs/fire/Instalador_64/database";
+        //URL de descarga de Dlls
+        public static String PATH_WEB_INSTALADOR_DLLS_64 = "ftp://ftp.bassart.com.ar/htdocs/fire/Instalador_64/dlls";
+
+        public static int seleccion = 64;
 
         public Padre()
         {
@@ -67,6 +82,7 @@ namespace Instalador
                             fh = new Hijo4();
                             btn_siguiente.Visible = false;
                             finalizar.Visible = true;
+                            btn_salir.Visible = false;
                             break;
                         }
 
@@ -86,6 +102,12 @@ namespace Instalador
             this.Close();
         }
         public void comenzar() { 
+            
+        }
+
+        private void finalizar_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -19,21 +19,35 @@ namespace Instalador
         }
         private void Hijo2_Shown(object sender, EventArgs e)
         {
-
-
-            this.crearDirectorio(Padre.PATH_LOCAL_INSTALADOR);
             
-            //this.crearDirectorio(Padre.PATH_LOCAL_TEMP_INSTALADOR); linea comentada de la version con mysql
-            this.crearDirectorio(Padre.PATH_LOCAL_PROG_INSTALADOR);
-            this.crearDirectorio(Padre.PATH_LOCAL_BBDD_INSTALADOR);
-            this.crearDirectorio(Padre.PATH_LOCAL_DLLS_INSTALADOR);
+            if (Padre.seleccion.Equals(32))
+            {
+                this.crearDirectorio(Padre.PATH_LOCAL_INSTALADOR);
 
-            this.descargarArchivos(Padre.PATH_WEB_INSTALADOR_PROG_32, Padre.PATH_LOCAL_PROG_INSTALADOR, Padre.FTP_USUARIO, Padre.FTP_PASSWORD);
-            this.descargarArchivos(Padre.PATH_WEB_INSTALADOR_BBDD_32, Padre.PATH_LOCAL_BBDD_INSTALADOR, Padre.FTP_USUARIO, Padre.FTP_PASSWORD);
-            this.descargarArchivos(Padre.PATH_WEB_INSTALADOR_DLLS_32, Padre.PATH_LOCAL_DLLS_INSTALADOR, Padre.FTP_USUARIO, Padre.FTP_PASSWORD);
-            //this.descargarArchivos(Padre.PATH_WEB_INSTALADOR_TMP_32, Padre.PATH_LOCAL_TEMP_INSTALADOR, Padre.FTP_USUARIO, Padre.FTP_PASSWORD); -- linea comentada de la version mysql
-            
+                //this.crearDirectorio(Padre.PATH_LOCAL_TEMP_INSTALADOR); linea comentada de la version con mysql
+                this.crearDirectorio(Padre.PATH_LOCAL_PROG_INSTALADOR);
+                this.crearDirectorio(Padre.PATH_LOCAL_BBDD_INSTALADOR);
+                this.crearDirectorio(Padre.PATH_LOCAL_DLLS_INSTALADOR);
 
+                this.descargarArchivos(Padre.PATH_WEB_INSTALADOR_PROG_32, Padre.PATH_LOCAL_PROG_INSTALADOR, Padre.FTP_USUARIO, Padre.FTP_PASSWORD);
+                this.descargarArchivos(Padre.PATH_WEB_INSTALADOR_BBDD_32, Padre.PATH_LOCAL_BBDD_INSTALADOR, Padre.FTP_USUARIO, Padre.FTP_PASSWORD);
+                this.descargarArchivos(Padre.PATH_WEB_INSTALADOR_DLLS_32, Padre.PATH_LOCAL_DLLS_INSTALADOR, Padre.FTP_USUARIO, Padre.FTP_PASSWORD);
+                //this.descargarArchivos(Padre.PATH_WEB_INSTALADOR_TMP_32, Padre.PATH_LOCAL_TEMP_INSTALADOR, Padre.FTP_USUARIO, Padre.FTP_PASSWORD); -- linea comentada de la version mysql
+            }
+            else {
+                this.crearDirectorio(Padre.PATH_LOCAL_INSTALADOR);
+
+                //this.crearDirectorio(Padre.PATH_LOCAL_TEMP_INSTALADOR); linea comentada de la version con mysql
+                this.crearDirectorio(Padre.PATH_LOCAL_PROG_INSTALADOR);
+                this.crearDirectorio(Padre.PATH_LOCAL_BBDD_INSTALADOR);
+                this.crearDirectorio(Padre.PATH_LOCAL_DLLS_INSTALADOR);
+
+                this.descargarArchivos(Padre.PATH_WEB_INSTALADOR_PROG_64, Padre.PATH_LOCAL_PROG_INSTALADOR, Padre.FTP_USUARIO, Padre.FTP_PASSWORD);
+                this.descargarArchivos(Padre.PATH_WEB_INSTALADOR_BBDD_64, Padre.PATH_LOCAL_BBDD_INSTALADOR, Padre.FTP_USUARIO, Padre.FTP_PASSWORD);
+                this.descargarArchivos(Padre.PATH_WEB_INSTALADOR_DLLS_64, Padre.PATH_LOCAL_DLLS_INSTALADOR, Padre.FTP_USUARIO, Padre.FTP_PASSWORD);
+                //this.descargarArchivos(Padre.PATH_WEB_INSTALADOR_TMP_32, Padre.PATH_LOCAL_TEMP_INSTALADOR, Padre.FTP_USUARIO, Padre.FTP_PASSWORD); -- linea comentada de la version mysql
+            }
+            descarga.Visible = true;
         }
 
         [FileIOPermission(SecurityAction.Demand, Write = @"C:\Program Files (x86)")]
@@ -60,12 +74,6 @@ namespace Instalador
         {
             progressBar.Value = e.ProgressPercentage;
         }
-
-        private void Completed(object sender, AsyncCompletedEventArgs e)
-        {
-            MessageBox.Show("Download completed!");
-        }
-        
 
         private void descargarArchivos(String fuente, String destino, String usuario, String clave){
 
