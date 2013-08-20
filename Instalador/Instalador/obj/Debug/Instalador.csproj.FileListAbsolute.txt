@@ -31,3 +31,13 @@ C:\works\proyectosCsharp\bassart-instalador\Instalador\Instalador\obj\Debug\Inst
 C:\works\proyectosCsharp\bassart-instalador\Instalador\Instalador\obj\Debug\Instalador.pdb
 C:\works\proyectosCsharp\bassart-instalador-firebird\Instalador\Instalador\obj\Debug\Instalador.exe
 C:\works\proyectosCsharp\bassart-instalador-firebird\Instalador\Instalador\obj\Debug\Instalador.pdb
+C:\works\proyectosCsharp\bassart-instalador-firebird\Instalador\Instalador\bin\Debug\Instalador.exe
+C:\works\proyectosCsharp\bassart-instalador-firebird\Instalador\Instalador\bin\Debug\Instalador.pdb
+C:\works\proyectosCsharp\bassart-instalador-firebird\Instalador\Instalador\obj\Debug\ResolveAssemblyReference.cache
+C:\works\proyectosCsharp\bassart-instalador-firebird\Instalador\Instalador\obj\Debug\Instalador.Hijo1.resources
+C:\works\proyectosCsharp\bassart-instalador-firebird\Instalador\Instalador\obj\Debug\Instalador.Hijo2.resources
+C:\works\proyectosCsharp\bassart-instalador-firebird\Instalador\Instalador\obj\Debug\Instalador.Hijo3.resources
+C:\works\proyectosCsharp\bassart-instalador-firebird\Instalador\Instalador\obj\Debug\Instalador.Hijo4.resources
+C:\works\proyectosCsharp\bassart-instalador-firebird\Instalador\Instalador\obj\Debug\Instalador.Padre.resources
+C:\works\proyectosCsharp\bassart-instalador-firebird\Instalador\Instalador\obj\Debug\Instalador.Properties.Resources.resources
+C:\works\proyectosCsharp\bassart-instalador-firebird\Instalador\Instalador\obj\Debug\Instalador.csproj.GenerateResource.Cache
